@@ -1,13 +1,14 @@
 import { Props, Element, joinNames } from '@util/components'
+import GenericComponent, { GenericProps } from '@/util/GenericComponent'
 
-export type ContainerProps = Props<{
-  type?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'fluid'
+export type ContainerType = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'fluid'
+
+export type ContainerProps = GenericProps<{
+  type?: ContainerType
 }>
 
-export type ContaineElement = Element<ContainerProps>
-
-export default function Container({ children, className, type }: ContainerProps): ContaineElement {
-  return <div className={joinNames(type && type !== 'xs' ? `container-${type}` : 'container', className)}>
+export default function Container({ children, classNames, type }: ContainerProps): Element<ContainerProps> {
+  return <GenericComponent classNames={[type && type !== 'xs' ? `container-${type}` : 'container', ...(classNames || [])]}>
     {children}
-  </div>
+  </GenericComponent>
 }
